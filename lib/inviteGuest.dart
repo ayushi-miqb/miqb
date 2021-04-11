@@ -4,16 +4,15 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:miqb/secondPage.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
-
-class complainContact extends StatefulWidget {
-  //userPage({required Key key}) : super(key: key);
+class inviteGuest extends StatefulWidget {
   @override
-  complainContactState createState() => new complainContactState();
+  inviteGuestState createState() => new inviteGuestState();
 }
 
 // ignore: camel_case_types
-class complainContactState extends State<complainContact> with SingleTickerProviderStateMixin {
+class inviteGuestState extends State<inviteGuest> with SingleTickerProviderStateMixin {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -24,18 +23,11 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
 
-  TextEditingController noidaIdController = new TextEditingController();
-  TextEditingController noidaPasswordController = new TextEditingController();
-  TextEditingController noidaPhoneController = new TextEditingController();
+  TextEditingController IdController = new TextEditingController();
+  TextEditingController guestController = new TextEditingController();
+  TextEditingController PhoneController = new TextEditingController();
 
-  bool _obscureTextLogin = true;
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
   bool isIdValid = true;
-
-  TextEditingController gurugramIdController = new TextEditingController();
-  TextEditingController gurugramPasswordController = new TextEditingController();
-  TextEditingController gurugramPhoneController = new TextEditingController();
 
   late PageController _pageController;
 
@@ -51,8 +43,8 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
       appBar: AppBar(
         automaticallyImplyLeading: true,
         leading : IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage())),
+        icon: Icon(Icons.arrow_back_ios),
+        onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage())),
         ),
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
@@ -80,12 +72,12 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.only(top: 0.0),
                   child: new Image(
                       width: 250.0,
                       height: 250.0,
                       fit: BoxFit.fill,
-                      image: new AssetImage('Assets/contact.png')),
+                      image: new AssetImage('Assets/guest.png')),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.0),
@@ -155,12 +147,9 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
     String _myActivity;
     String _myActivityResult;
     final formKey = new GlobalKey<FormState>();
+    List<String> recipents = ['6264948981'];
+    String message;
 
-    void initState() {
-      super.initState();
-      _myActivity = '';
-      _myActivityResult = '';
-    }
     return Container(
       padding: EdgeInsets.only(top: 0.0),
       child: Column(
@@ -186,7 +175,7 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
                         child: TextFormField(
                           autofocus: true,
                           focusNode: myFocusNodeName,
-                          controller: noidaIdController,
+                          controller: IdController,
                           keyboardType: TextInputType.text,
                           textCapitalization: TextCapitalization.words,
                           style: TextStyle(
@@ -207,15 +196,31 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: myFocusNodeName,
+                          controller: guestController,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          style: TextStyle(
+                            fontFamily: "WorkSansSemiBold",
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Name (Guest)",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
+                          ),
+                        ),
                       ),
                       Container(
                         width: 250.0,
                         height: 1.0,
-
                         color: Colors.grey[400],
                       ),
                       Padding(
@@ -223,7 +228,7 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: TextFormField(
                           autofocus : true,
-                          controller: noidaPhoneController,
+                          controller: PhoneController,
                           keyboardType: TextInputType.numberWithOptions(),
                           maxLines: null,
                           style: TextStyle(
@@ -232,11 +237,16 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
                               color: Colors.black),
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Enter Complain Here.",
+                            hintText: "Contact Number(Guest)",
                             hintStyle: TextStyle(
                                 fontFamily: "WorkSansSemiBold", fontSize: 12.0),
                           ),
                         ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
                       ),
                     ],
                   ),
@@ -276,14 +286,18 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
                       padding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 42.0),
                       child: Text(
-                        "CONTACT",
+                        "INVITE",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 25.0,
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed : (){} //_makingPhoneCall ,
+                    onPressed : (){
+                      message = 'MiQB Id : ' + IdController.text + '\n' +'Guest Name :' + guestController.text + '\n' +'Contact Number :' + PhoneController.text;
+                      _sendSMS(message , recipents);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
+                    } //_makingPhoneCall ,
                 ),
               ),
             ],
@@ -293,7 +307,13 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
 
     );
   }
-
+  void _sendSMS(String message, List<String> recipents) async {
+    String _result = await sendSMS(message: message, recipients: recipents)
+        .catchError((onError) {
+      print(onError);
+    });
+    print(_result);
+  }
   bool validateTextField(String userInput) {
     if (userInput.isEmpty) {
       setState(() {
@@ -308,6 +328,8 @@ class complainContactState extends State<complainContact> with SingleTickerProvi
   }
 
 }
+
+
 
 
 //tabIndicationPainter
@@ -357,12 +379,4 @@ class TabIndicationPainter extends CustomPainter {
   @override
   bool shouldRepaint(TabIndicationPainter oldDelegate) => true;
 }
-//to make call
-/*_makingPhoneCall() async {
-  const url = 'tel:6264948981';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}*/
+

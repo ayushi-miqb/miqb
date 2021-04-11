@@ -5,7 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:miqb/secondPage.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_sms/flutter_sms.dart';
+
+//3import 'package:url_launcher/url_launcher.dart';
 
 class meetingRoom extends StatefulWidget {
   //userPage({required Key key}) : super(key: key);
@@ -49,6 +52,14 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Color(0xFF040B34),
+        automaticallyImplyLeading: true,
+        leading : IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage())),
+        ),
+      ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         /*onNotification: (overscroll) {
           overscroll.disallowGlow();
@@ -144,19 +155,32 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
       duration: Duration(seconds: 3),
     ));
   }
+  final formKey = new GlobalKey<FormState>();
+  List<String> recipents = ['6264948981'];
+  String message = '';
   Widget _buildSignIn(BuildContext context) {
 
-    String _myActivity;
+    String _myActivity =" ";
     String _myActivityResult;
-    final formKey = new GlobalKey<FormState>();
+    String _date = "Not set";
+    String _time = "Not set";
 
     void initState() {
       super.initState();
       _myActivity = '';
       _myActivityResult = '';
     }
+    /*_saveForm() {
+      var form = formKey.currentState;
+      if (form!.validate()) {
+        form.save();
+        setState(() {
+          _myActivityResult = _myActivity;
+        });
+      }
+    }*/
     return Container(
-      padding: EdgeInsets.only(top: 10.0),
+      padding: EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
           Stack(
@@ -171,8 +195,8 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                 ),
                 child: Container(
                   width: 300.0,
-                  height: 250.0,
-                  child: Wrap(
+                  height: 380.0,
+                  child: Column(
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(
@@ -183,6 +207,7 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                           controller: noidaIdController,
                           keyboardType: TextInputType.text,
                           textCapitalization: TextCapitalization.words,
+                          onChanged :(newText) {enteredText : noidaIdController;},
                           style: TextStyle(
                             fontFamily: "WorkSansSemiBold",
                             fontSize: 14.0,
@@ -210,6 +235,17 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                         padding: EdgeInsets.only(
                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: DropDownFormField(
+                          /*value : _myActivity,
+                          onSaved : (value){
+                             setState(() {
+                               _myActivity = value;
+                             });
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _myActivity = value;
+                            });
+                          },*/
                           hintText: 'All Meeting Room',
                           dataSource: [
                             {
@@ -231,7 +267,6 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                           ],
                           textField: 'display',
                           valueField: 'value',
-
                         ),
                       ),
                       Container(
@@ -239,12 +274,146 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                elevation: 4.0,
+                                onPressed: () {
+                                  DatePicker.showDatePicker(context,
+                                      theme: DatePickerTheme(
+                                        containerHeight: 210.0,
+                                      ),
+                                      showTitleActions: true,
+                                      minTime: DateTime(2000, 1, 1),
+                                      maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
+                                        print('confirm $date');
+                                        _date = '${date.year} - ${date.month} - ${date.day}';
+                                        setState(() {
+                                          _date = '${date.year} - ${date.month} - ${date.day}';
+                                        });
+                                      }, currentTime: DateTime.now(), locale: LocaleType.en);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 50.0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  Icons.date_range,
+                                                  size: 18.0,
+                                                  color: Colors.black54,
+                                                ),
+                                                Text(
+                                                  " $_date",
+                                                  style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.0),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Text(
+                                        "  Change",
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                elevation: 4.0,
+                                onPressed: () {
+                                  DatePicker.showTimePicker(context,
+                                      theme: DatePickerTheme(
+                                        containerHeight: 210.0,
+                                      ),
+                                      showTitleActions: true, onConfirm: (time) {
+                                        print('confirm $time');
+                                       _time = '${time.hour} : ${time.minute} : ${time.second}';
+                                        setState(() {
+                                          _time = '${time.hour} : ${time.minute} : ${time.second}';
+                                        });
+                                      }, currentTime: DateTime.now(), locale: LocaleType.en);
+                                  setState(() {
+                                  });
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 50.0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  Icons.access_time,
+                                                  size: 18.0,
+                                                  color: Colors.black54,
+                                                ),
+                                                Text(
+                                                  " $_time",
+                                                  style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.0),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Text(
+                                        "  Change",
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
+
               Container(
-                margin: EdgeInsets.only(top: 220.0),
+                margin: EdgeInsets.only(top: 360.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   boxShadow: <BoxShadow>[
@@ -275,9 +444,9 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
+                          vertical: 5.0, horizontal: 10.0),
                       child: Text(
-                        "BOOK A \n MEETING ROOM",
+                        "BOOK",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
@@ -285,7 +454,9 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () => {
+                    onPressed: () =>{
+                      message = 'MiQB Id : ' + noidaIdController.text + ' \n Time : '+ _time + '\n Date : ' + _date ,
+                      _sendSMS(message , recipents),
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()))
                     }
                 ),
@@ -294,32 +465,18 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
           ),
         ],
       ),
-
     );
   }
 
-  void _onSignUpButtonPress() {
-    _pageController.animateToPage(1,
-        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+  //SENDS MESSAGE TO RECIPENT
+  void _sendSMS(String message, List<String> recipents) async {
+    String _result = await sendSMS(message: message, recipients: recipents)
+        .catchError((onError) {
+      print(onError);
+    });
+    print(_result);
   }
 
-  void _toggleLogin() {
-    setState(() {
-      _obscureTextLogin = !_obscureTextLogin;
-    });
-  }
-
-  void _toggleSignup() {
-    setState(() {
-      _obscureTextSignup = !_obscureTextSignup;
-    });
-  }
-
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextSignupConfirm = !_obscureTextSignupConfirm;
-    });
-  }
   bool validateTextField(String userInput) {
     if (userInput.isEmpty) {
       setState(() {

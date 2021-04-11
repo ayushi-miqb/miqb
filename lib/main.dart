@@ -2,17 +2,27 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:miqb/onBoardingScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:miqb/config/config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  MiQBApp.auth = FirebaseAuth.instance;
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  MiQBApp.firestore = Firestore.instance;
   runApp(MyApp());
+
 }
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(

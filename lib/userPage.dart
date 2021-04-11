@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
@@ -5,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:miqb/secondPage.dart';
+import 'package:miqb/secondGuruPage.dart';
 
 class userPage extends StatefulWidget {
   //userPage({required Key key}) : super(key: key);
@@ -373,7 +377,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                       ),
                     ),
                     onPressed: () {
-                      validateTextField(noidaIdController.text);
+                      //validateTextField(noidaIdController.text);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
                     },
                 ),
@@ -447,11 +451,6 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                                 fontFamily: "WorkSansSemiBold", fontSize: 12.0),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
                       ),
                       Container(
                         width: 250.0,
@@ -565,8 +564,9 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () =>
-                        showInSnackBar("SignUp button pressed")
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondGuruPage()));
+                    }
                 ),
               ),
             ],
@@ -575,7 +575,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
             padding: EdgeInsets.only(top: 10.0),
             child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondGuruPage()));
                 },
                 child: Text(
                   "CONTINUE AS GUEST",
@@ -592,46 +592,21 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
 
   }
 
+  //for changing location
   void _onSignInButtonPress() {
     _pageController.animateToPage(0,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
-
   void _onSignUpButtonPress() {
     _pageController.animateToPage(1,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
-
-  void _toggleLogin() {
-    setState(() {
-      _obscureTextLogin = !_obscureTextLogin;
-    });
-  }
-
+  //for password field in noida and gurugram
   void _toggleSignup() {
     setState(() {
       _obscureTextSignup = !_obscureTextSignup;
     });
   }
-
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextSignupConfirm = !_obscureTextSignupConfirm;
-    });
-  }
-  bool validateTextField(String userInput) {
-    if (userInput.isEmpty) {
-      setState(() {
-        isIdValidate = true;
-      });
-      return false;
-    }
-    setState(() {
-      isIdValidate = false;
-    });
-    return true;
-  }
-
 }
 
 
