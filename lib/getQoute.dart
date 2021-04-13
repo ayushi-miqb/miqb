@@ -3,9 +3,11 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:miqb/secondPage.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:flutter_sms/flutter_sms.dart';
+
+//3import 'package:url_launcher/url_launcher.dart';
 
 class getQoute extends StatefulWidget {
   //userPage({required Key key}) : super(key: key);
@@ -25,18 +27,14 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
 
-  TextEditingController noidaIdController = new TextEditingController();
-  TextEditingController noidaPasswordController = new TextEditingController();
-  TextEditingController noidaPhoneController = new TextEditingController();
+  TextEditingController name = new TextEditingController();
+  TextEditingController emailId = new TextEditingController();
+  TextEditingController phoneNumber = new TextEditingController();
+  TextEditingController company = new TextEditingController();
+  TextEditingController nOfSeats = new TextEditingController();
 
-  bool _obscureTextLogin = true;
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
+
   bool isIdValid = true;
-
-  TextEditingController gurugramIdController = new TextEditingController();
-  TextEditingController gurugramPasswordController = new TextEditingController();
-  TextEditingController gurugramPhoneController = new TextEditingController();
 
   late PageController _pageController;
 
@@ -49,6 +47,14 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        automaticallyImplyLeading: true,
+        leading : IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage())),
+        ),
+      ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         /*onNotification: (overscroll) {
           overscroll.disallowGlow();
@@ -74,15 +80,7 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 50.0),
-                  child: new Image(
-                      width: 250.0,
-                      height: 250.0,
-                      fit: BoxFit.fill,
-                      image: new AssetImage('Assets/qoute.png')),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(top: 10.0),
                   //child: _buildMenuBar(context),
                 ),
                 Expanded(
@@ -144,19 +142,13 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
       duration: Duration(seconds: 3),
     ));
   }
+  final formKey = new GlobalKey<FormState>();
+  List<String> recipents = ['6264948981'];
+  String message = '';
   Widget _buildSignIn(BuildContext context) {
-
-    String _myActivity;
-    String _myActivityResult;
-    final formKey = new GlobalKey<FormState>();
-
-    void initState() {
-      super.initState();
-      _myActivity = '';
-      _myActivityResult = '';
-    }
+    String dropdownValue = 'Allocated Work Stations';
     return Container(
-      padding: EdgeInsets.only(top: 0.0),
+      padding: EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
           Stack(
@@ -171,112 +163,184 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
                 ),
                 child: Container(
                   width: 300.0,
-                  height: 300.0,
-                  child: Wrap(
+                  height: 550.0,
+                  child: Column(
                     children: <Widget>[
-                  Padding(
-                  padding: EdgeInsets.only(
-                      top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                  child: TextFormField(
-                    autofocus: true,
-                    focusNode: myFocusNodeName,
-                    controller: noidaIdController,
-                    keyboardType: TextInputType.text,
-                    textCapitalization: TextCapitalization.words,
-                    style: TextStyle(
-                      fontFamily: "WorkSansSemiBold",
-                      fontSize: 14.0,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "MiQB ID",
-                      hintStyle: TextStyle(
-                          fontFamily: "WorkSansSemiBold", fontSize: 12.0),
-                    ),
+
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: myFocusNodeName,
+                          controller: name,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          onChanged :(newText) {enteredText : name;},
+                          style: TextStyle(
+                            fontFamily: "WorkSansSemiBold",
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Name",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: myFocusNodeName,
+                          controller: emailId,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          onChanged :(newText) {enteredText : emailId;},
+                          style: TextStyle(
+                            fontFamily: "WorkSansSemiBold",
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Email Id",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: myFocusNodeName,
+                          controller: phoneNumber,
+                          keyboardType: TextInputType.numberWithOptions(),
+                          textCapitalization: TextCapitalization.words,
+                          onChanged :(newText) {enteredText : phoneNumber;},
+                          style: TextStyle(
+                            fontFamily: "WorkSansSemiBold",
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Phone Number",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: myFocusNodeName,
+                          controller: company,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          onChanged :(newText) {enteredText : company;},
+                          style: TextStyle(
+                            fontFamily: "WorkSansSemiBold",
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Company Name",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: myFocusNodeName,
+                          controller: nOfSeats,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          onChanged :(newText) {enteredText : nOfSeats;},
+                          style: TextStyle(
+                            fontFamily: "WorkSansSemiBold",
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "No Of Seats",
+                            hintStyle: TextStyle(
+                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 250.0,
+                        height: 1.0,
+                        color: Colors.grey[400],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child : DropdownButton(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.red,
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                          items: <String>['Allocated Work Stations', 'Open Flexi', 'Premium Office', 'Private Office' , 'Suites' , 'Training Room' , 'Create Your Own']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-        Container(
-          width: 250.0,
-          height: 1.0,
-          color: Colors.grey[400],
-        ),
-        Container(
-          width: 250.0,
-          height: 1.0,
-          color: Colors.grey[400],
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: DropDownFormField(
-            hintText: 'All Categories',
-            dataSource: [
-              {
-                "display": "Allocated Work Stations",
-                "value": "Allocated Work Stations",
-              },
-              {
-                "display": "Create Your Own QB",
-                "value": "Create Your Own QB",
-              },
-              {
-                "display": "Open Flexi",
-                "value": "Open Flexi",
-              },
-              {
-                "display": "Premium Cabins",
-                "value": "Premium Cabins",
-              },
-              {
-                "display": "Private Offices",
-                "value": "Private Offices",
-              },
-              {
-                "display": "Suites",
-                "value": "Suites",
-              },
-              {
-                "display": "Training Room",
-                "value": "Training Room",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
-
-            ),
-          ),
-        Container(
-          width: 250.0,
-          height: 1.0,
-
-          color: Colors.grey[400],
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-          child: TextFormField(
-            autofocus : true,
-            controller: noidaPhoneController,
-            keyboardType: TextInputType.numberWithOptions(),
-            style: TextStyle(
-                fontFamily: "WorkSansSemiBold",
-                fontSize: 14.0,
-                color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: "Number Of Seats",
-              hintStyle: TextStyle(
-                  fontFamily: "WorkSansSemiBold", fontSize: 12.0),
-            ),
-          ),
-        ),
-                    ],
-                ),
               ),
-              ),
+
               Container(
-                margin: EdgeInsets.only(top: 290.0),
+                margin: EdgeInsets.only(top: 520.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   boxShadow: <BoxShadow>[
@@ -307,16 +371,19 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
+                          vertical: 5.0, horizontal: 10.0),
                       child: Text(
-                        "GET QOUTE",
+                        "BOOK",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25.0,
+                            fontSize: 20.0,
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () => {
+                    onPressed: () =>{
+                      // message = 'MiQB Id : ' + IdController.text + ' \n Time : '+ _time + '\n Date : ' + _date ,
+                      _sendSMS(message , recipents),
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()))
                     }
                 ),
@@ -325,32 +392,18 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
           ),
         ],
       ),
-
     );
   }
 
-  void _onSignUpButtonPress() {
-    _pageController.animateToPage(1,
-        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+  //SENDS MESSAGE TO RECIPENT
+  void _sendSMS(String message, List<String> recipents) async {
+    String _result = await sendSMS(message: message, recipients: recipents)
+        .catchError((onError) {
+      print(onError);
+    });
+    print(_result);
   }
 
-  void _toggleLogin() {
-    setState(() {
-      _obscureTextLogin = !_obscureTextLogin;
-    });
-  }
-
-  void _toggleSignup() {
-    setState(() {
-      _obscureTextSignup = !_obscureTextSignup;
-    });
-  }
-
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextSignupConfirm = !_obscureTextSignupConfirm;
-    });
-  }
   bool validateTextField(String userInput) {
     if (userInput.isEmpty) {
       setState(() {
@@ -365,6 +418,8 @@ class getQouteState extends State<getQoute> with SingleTickerProviderStateMixin 
   }
 
 }
+
+
 
 
 //tabIndicationPainter
@@ -415,3 +470,5 @@ class TabIndicationPainter extends CustomPainter {
   bool shouldRepaint(TabIndicationPainter oldDelegate) => true;
 
 }
+
+

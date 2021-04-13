@@ -28,20 +28,14 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
 
-  TextEditingController noidaIdController = new TextEditingController();
-  TextEditingController noidaPasswordController = new TextEditingController();
-  TextEditingController noidaPhoneController = new TextEditingController();
+  TextEditingController IdController = new TextEditingController();
+  TextEditingController _dateController = new TextEditingController();
+  //TextEditingController noidaPasswordController = new TextEditingController();
+  //TextEditingController noidaPhoneController = new TextEditingController();
 
-  bool _obscureTextLogin = true;
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
   bool isIdValid = true;
 
-  TextEditingController gurugramIdController = new TextEditingController();
-  TextEditingController gurugramPasswordController = new TextEditingController();
-  TextEditingController gurugramPhoneController = new TextEditingController();
-
-  late PageController _pageController;
+   late PageController _pageController;
 
   Color left = Colors.black;
   Color right = Colors.white;
@@ -160,25 +154,12 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
   String message = '';
   Widget _buildSignIn(BuildContext context) {
 
-    String _myActivity =" ";
-    String _myActivityResult;
     String _date = "Not set";
     String _time = "Not set";
 
-    void initState() {
-      super.initState();
-      _myActivity = '';
-      _myActivityResult = '';
-    }
-    /*_saveForm() {
-      var form = formKey.currentState;
-      if (form!.validate()) {
-        form.save();
-        setState(() {
-          _myActivityResult = _myActivity;
-        });
-      }
-    }*/
+    //for dropdownmenu
+    String dropdownValue = 'OPAL (Ground Floor)';
+
     return Container(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -204,10 +185,10 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                         child: TextFormField(
                           autofocus: true,
                           focusNode: myFocusNodeName,
-                          controller: noidaIdController,
+                          controller: IdController,
                           keyboardType: TextInputType.text,
                           textCapitalization: TextCapitalization.words,
-                          onChanged :(newText) {enteredText : noidaIdController;},
+                          onChanged :(newText) {enteredText : IdController;},
                           style: TextStyle(
                             fontFamily: "WorkSansSemiBold",
                             fontSize: 14.0,
@@ -226,63 +207,15 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: DropDownFormField(
-                          /*value : _myActivity,
-                          onSaved : (value){
-                             setState(() {
-                               _myActivity = value;
-                             });
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _myActivity = value;
-                            });
-                          },*/
-                          hintText: 'All Meeting Room',
-                          dataSource: [
-                            {
-                              "display": "Opal (Ground Floor)",
-                              "value": "Opal (Ground Floor)",
-                            },
-                            {
-                              "display": "Coral (Ground Floor)",
-                              "value": "Coral (Ground Floor)",
-                            },
-                            {
-                              "display": "Emerald (First Floor)",
-                              "value": "Emerald (First Floor)",
-                            },
-                            {
-                              "display": "Pearl (First Floor)",
-                              "value": "Pearl (First Floor)",
-                            },
-                          ],
-                          textField: 'display',
-                          valueField: 'value',
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
+                       padding: EdgeInsets.only(
                           top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: Container(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              MaterialButton(
+                              RaisedButton(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5.0)),
                                 elevation: 4.0,
@@ -300,7 +233,7 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                                           _date = '${date.year} - ${date.month} - ${date.day}';
                                         });
                                       }, currentTime: DateTime.now(), locale: LocaleType.en);
-                                },
+                                  },
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 50.0,
@@ -318,7 +251,7 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                                                   color: Colors.black54,
                                                 ),
                                                 Text(
-                                                  " $_date",
+                                                   '$_date',
                                                   style: TextStyle(
                                                       color: Colors.black54,
                                                       fontWeight: FontWeight.bold,
@@ -338,8 +271,7 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                                       ),
                                     ],
                                   ),
-                                ),
-                                color: Colors.white,
+                                ), color: Colors.white,
                               ),
                               SizedBox(
                                 height: 20.0,
@@ -360,8 +292,7 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                                           _time = '${time.hour} : ${time.minute} : ${time.second}';
                                         });
                                       }, currentTime: DateTime.now(), locale: LocaleType.en);
-                                  setState(() {
-                                  });
+                                  //setState(() {});
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -405,6 +336,33 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                               )
                             ],
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                        child : DropdownButton(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.red,
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                          items: <String>['OPAL (Ground Floor)', 'CORAL (Ground Floor)', 'EMERALD (First Floor)', 'RUBY (First Floor)']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                       ),
                     ],
@@ -455,7 +413,7 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
                       ),
                     ),
                     onPressed: () =>{
-                      message = 'MiQB Id : ' + noidaIdController.text + ' \n Time : '+ _time + '\n Date : ' + _date ,
+                     // message = 'MiQB Id : ' + IdController.text + ' \n Time : '+ _time + '\n Date : ' + _date ,
                       _sendSMS(message , recipents),
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()))
                     }
@@ -491,6 +449,8 @@ class meetingRoomState extends State<meetingRoom> with SingleTickerProviderState
   }
 
 }
+
+
 
 
 //tabIndicationPainter

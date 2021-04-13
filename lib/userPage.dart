@@ -29,16 +29,12 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
   final FocusNode myFocusNodeName = FocusNode();
 
   TextEditingController noidaIdController = new TextEditingController();
-  TextEditingController noidaPasswordController = new TextEditingController();
   TextEditingController noidaPhoneController = new TextEditingController();
 
-  bool _obscureTextLogin = true;
   bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
   bool isIdValid = true;
 
   TextEditingController gurugramIdController = new TextEditingController();
-  TextEditingController gurugramPasswordController = new TextEditingController();
   TextEditingController gurugramPhoneController = new TextEditingController();
 
   late PageController _pageController;
@@ -230,7 +226,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                   ),
                   child: Container(
                     width: 300.0,
-                    height: 290.0,
+                    height: 200.0,
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -269,40 +265,6 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                           height: 1.0,
                           color: Colors.grey[400],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                          child: TextFormField(
-                            autofocus : true,
-                            focusNode: myFocusNodePassword,
-                            controller: noidaPasswordController,
-                            obscureText: _obscureTextSignup,
-                            style: TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 14.0,
-                                color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              icon: Icon(
-                                FontAwesomeIcons.lock,
-                                color: Colors.black,
-                              ),
-                              hintText: "Password",
-                              hintStyle: TextStyle(
-                                  fontFamily: "WorkSansSemiBold", fontSize: 12.0),
-                              suffixIcon: GestureDetector(
-                                onTap: _toggleSignup,
-                                child: Icon(
-                                  _obscureTextSignup
-                                      ? FontAwesomeIcons.eye
-                                      : FontAwesomeIcons.eyeSlash,
-                                  size: 15.0,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                         Container(
                           width: 250.0,
                           height: 1.0,
@@ -325,7 +287,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                                 FontAwesomeIcons.phone,
                                 color: Colors.black,
                               ),
-                              hintText: "Mobile Number",
+                              hintText: "Contact Number",
                               hintStyle: TextStyle(
                                   fontFamily: "WorkSansSemiBold", fontSize: 12.0),
                             ),
@@ -336,7 +298,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                   ),
                 ),
             Container(
-              margin: EdgeInsets.only(top: 280.0),
+              margin: EdgeInsets.only(top: 180.0),
               decoration: new BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
               boxShadow: <BoxShadow>[
@@ -377,7 +339,8 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                       ),
                     ),
                     onPressed: () {
-                      //validateTextField(noidaIdController.text);
+                      Firestore.instance.collection('MiQB User(Noida)').document('MiQB User(Noida)').setData({'MiQB ID':noidaIdController});
+                      Firestore.instance.collection('MiQB User(Noida)').document('MiQB User(Noida)').setData({'Contact Number':noidaPhoneController});
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
                     },
                 ),
@@ -388,6 +351,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
             padding: EdgeInsets.only(top: 10.0),
             child: TextButton(
                 onPressed: () {
+                  Firestore.instance.collection('user').document('user').setData({'user':'Guest'});
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
                 },
                 child: Text(
@@ -423,7 +387,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                 ),
                 child: Container(
                   width: 300.0,
-                  height: 290.0,
+                  height: 200.0,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -461,45 +425,6 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                         padding: EdgeInsets.only(
                             top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: TextFormField(
-                          autofocus: true,
-                          focusNode: myFocusNodePassword,
-                          controller: gurugramPasswordController,
-                          obscureText: _obscureTextSignup,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Password",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 12.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignup,
-                              child: Icon(
-                                _obscureTextSignup
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextFormField(
                           autofocus : true,
                           controller: gurugramPhoneController,
                           keyboardType: TextInputType.numberWithOptions(),
@@ -513,7 +438,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                               FontAwesomeIcons.phone,
                               color: Colors.black,
                             ),
-                            hintText: "Mobile Number",
+                            hintText: "Contact Number",
                             hintStyle: TextStyle(
                                 fontFamily: "WorkSansSemiBold", fontSize: 12.0),
                           ),
@@ -524,7 +449,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 280.0),
+                margin: EdgeInsets.only(top: 180.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   boxShadow: <BoxShadow>[
@@ -565,6 +490,8 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
                       ),
                     ),
                     onPressed: () {
+                      Firestore.instance.collection('MiQB User(Gurugram)').document('MiQB User(Gurugram)').setData({'MiQB user':gurugramIdController});
+                      Firestore.instance.collection('MiQB User(Gurugram)').document('MiQB User(Gurugram)').setData({'Contact Number':gurugramPhoneController});
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondGuruPage()));
                     }
                 ),
@@ -575,6 +502,7 @@ class _userPageState extends State<userPage> with SingleTickerProviderStateMixin
             padding: EdgeInsets.only(top: 10.0),
             child: TextButton(
                 onPressed: () {
+                  Firestore.instance.collection('user').document('user').setData({'user':'Guest'});
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondGuruPage()));
                 },
                 child: Text(

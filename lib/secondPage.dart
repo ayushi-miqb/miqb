@@ -36,88 +36,6 @@ class SecondPageState extends State<SecondPage> with SingleTickerProviderStateMi
       drawer : NavDrawer(),
       body : ListView(
         children: [
-          //training room
-          Card(
-            elevation: 2.0,
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Container(
-              width: 300.0,
-              height: 300.0,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: new Image(
-                        width: 400.0,
-                        height: 183.0,
-                        fit: BoxFit.fill,
-                        image: new AssetImage('Assets/noida/training_room.jpg')),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top : 10.0),
-                  ),
-                  Text(
-                    'TRAINING ROOM',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: "WorkSansBold",
-                      fontSize: 20.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10.0),
-                    decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.white,
-                          offset: Offset(1.0, 6.0),
-                          blurRadius: 20.0,
-                        ),
-                        BoxShadow(
-                          color: Colors.white70,
-                          offset: Offset(1.0, 6.0),
-                          blurRadius: 20.0,
-                        ),
-                      ],
-                      gradient: new LinearGradient(
-                          colors: [
-                            Colors.black,
-                            Colors.black
-                          ],
-                          begin: const FractionalOffset(0.2, 0.2),
-                          end: const FractionalOffset(1.0, 1.0),
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
-                    ),
-                    child: MaterialButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.white,
-                        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 42.0),
-                          child: Text(
-                            "KNOW MORE",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25.0,
-                                fontFamily: "WorkSansBold"),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
-                        }
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           //open flexi
           Card(
             elevation: 2.0,
@@ -580,7 +498,6 @@ class SecondPageState extends State<SecondPage> with SingleTickerProviderStateMi
                           ),
                         ),
                         onPressed: () {
-                          //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
                           showDialog(
                               context : context,
                               builder : (BuildContext context) {
@@ -718,7 +635,188 @@ class SecondPageState extends State<SecondPage> with SingleTickerProviderStateMi
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SecondPage()));
+                          showDialog(
+                              context : context,
+                              builder : (BuildContext context) {
+                                return Dialog(
+                                  shape : RoundedRectangleBorder(
+                                      borderRadius : BorderRadius.circular(20.0)),
+                                  child : Container(
+                                    height : 500,
+                                    child : Padding(
+                                      padding : const EdgeInsets.all(2.0),
+                                      child : Column(
+                                        mainAxisAlignment : MainAxisAlignment.center,
+                                        crossAxisAlignment : CrossAxisAlignment.stretch,
+                                        children :[
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 17,),
+                                            children: [
+                                              TextSpan(text: '  CORPORATE MEMBERSHIP PLANS.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  SILVER.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 3 full days within 3 months of commencement of Membership.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  GOLD.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 5 full days within 3 months of commencement of Membership.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  PLATINUM.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 12 full days within 3 months of commencement of Membership.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  DIAMOND.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 20 full days within 3 months of commencement of Membership.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+
+                                          /*Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 17,),
+                                            children: [
+                                              TextSpan(text: '  INSTITUTIONAL MEMBERSHIP PLANS.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  PEARL.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 6 Half days within 3 months of commencement of Membership.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  RUBY.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 10 Half days within 3 months of commencement of Membership.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  SAPPHIRE.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 24 Half days within 3 months of commencement of Membership\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 15,),
+                                            children: [
+                                              TextSpan(text: '  EMERALD.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.person),),
+                                              TextSpan(text: '  Use of Training Rooms for any 40 Half days within 3 months of commencement of Membership\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.wifi),),
+                                              TextSpan(text: '  Free Wifi.\t\t',)],),),
+                                          Text.rich( TextSpan(
+                                            style: TextStyle(fontSize: 12,),
+                                            children: [
+                                              WidgetSpan(child: Icon(Icons.local_drink),),
+                                              TextSpan(text: '  Unlimited Tea & Coffee.\t\t\t\t\t\t\t',)],),),
+                                          */
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
                         }
                     ),
                   ),
@@ -762,6 +860,13 @@ class NavDrawer extends StatelessWidget
             title: Text('Invite A Guest'),
             onTap: () => {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => inviteGuest()))
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.insert_comment),
+            title: Text('Request A Qoute'),
+            onTap: () => {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => getQoute()))
             },
           ),
           ListTile(
